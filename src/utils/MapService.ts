@@ -1,8 +1,8 @@
 // 初始化地图
-import { ref, reactive, onMounted, nextTick } from 'vue'
+import { ref, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 // import { getCxwShip } from '@/api/modules/ship'
-import { projectInfoList, getBaseMapData } from "@/api/modules/index";
+// import { projectInfoList, getBaseMapData } from "@/api/modules/index";
 
 const typeMap = {
   outShip: '外',
@@ -54,7 +54,7 @@ const eventEmitter = {
 };
 
 // 导出事件发射器
- const mapEvents = eventEmitter;
+const mapEvents = eventEmitter;
 
 async function initMap(options: any, callback: (marker: any, markerType: string) => void, callbackMousemove: (lnglat: any, markerType: string) => void, markCallback: (marker: any, markerType: string) => void) {
   if (!options || !options.mapContainer) {

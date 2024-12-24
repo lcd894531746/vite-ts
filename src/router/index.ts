@@ -6,6 +6,7 @@ import Table from '../views/Table.vue'
 import Echarts from '../views/Echarts.vue'
 import Rolling from '../views/Rolling.vue'
 import Tiandi from '../views/Tiandi.vue'
+import Xgplayer from '../views/Xgplayer.vue'
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -52,7 +53,15 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '天地图页面'
         }
-      }
+      },
+      {
+        path: '/xgplayer',
+        name: 'xgplayer',
+        component: Xgplayer,
+        meta: {
+          title: 'xgplayer页面'
+        }
+      } 
     ]
   }
 ]
