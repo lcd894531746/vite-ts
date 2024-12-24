@@ -341,6 +341,7 @@ defineExpose({
   --el-table-header-bg-color: rgba(0, 25, 50, 0.95); /* 稍深的表头背景 */
   --el-table-tr-bg-color: rgba(0, 25, 50, 0.7); /* 主体背景色 */
   --el-table-row-hover-bg-color: rgba(24, 63, 255, 0.15); /* 更明显的悬浮效果 */
+  --el-table-bg-color: rgba(0, 25, 50, 0.7); /* 主体背景色 */
 }
 
 /* 表格整体样式 */

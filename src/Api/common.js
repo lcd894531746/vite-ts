@@ -495,12 +495,14 @@ export const getEchartsOption = async (type) => {
                 }
             `;
             const fn = new Function('context', code);
+            debugger
+            console.log("fn",context, fn);
             option = fn(context);
+            console.log("option", option);
 
             // 判断图表类型
             const chartType = getChartType(option);
             console.log('检测到的图表类型:', chartType);
-
             // 如果能匹配到对应的图表类型配置，则进行合并
             if (chartType && CHART_TYPE_OPTIONS[chartType]) {
                 const defaultOption = CHART_TYPE_OPTIONS[chartType];
