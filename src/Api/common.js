@@ -495,7 +495,6 @@ export const getEchartsOption = async (type) => {
                 }
             `;
             const fn = new Function('context', code);
-            debugger
             console.log("fn",context, fn);
             option = fn(context);
             console.log("option", option);

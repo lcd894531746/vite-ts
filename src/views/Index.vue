@@ -70,8 +70,9 @@ const handleNavClick = (path: string) => {
 <style scoped>
 .layout {
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
   background: #0a0a0a;
+  overflow: hidden;
 }
 
 .sidebar {

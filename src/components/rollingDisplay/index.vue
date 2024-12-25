@@ -70,6 +70,7 @@ interface Props {
   height?: string | number;
   singleScroll?: boolean;
   wheelable?: boolean;
+  theme?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -79,9 +80,9 @@ const props = withDefaults(defineProps<Props>(), {
   clickable: true,
   visibleItems: 3,
   width: "300px",
-  // height: '65px',
   singleScroll: false,
   wheelable: true,
+  theme: '#0066FF'
 });
 
 const emit = defineEmits<{
@@ -177,7 +178,7 @@ const getItemSize = () => {
   const style = window.getComputedStyle(firstItem);
 
   if (props.direction === "horizontal") {
-    // 获取项目的实际宽度（包括内边距和外边距）
+    // 获取项目的实际宽度��包括内边距和外边距）
     return (
       firstItem.offsetWidth +
       parseFloat(style.marginLeft) +
@@ -522,6 +523,38 @@ const getItemImage = (item: string | RollingItem): string | undefined => {
 const isHTML = (str: string): boolean => {
   return /<[a-z][\s\S]*>/i.test(str);
 };
+
+// 主题样式计算
+const themeStyle = computed(() => {
+  const color = props.theme;
+  const rgb = hexToRgb(color);
+  
+  return {
+    primary: color,
+    background: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`,
+    border: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.3)`,
+    text: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.9)`,
+    hoverText: color,
+    shadow: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2)`,
+    glow: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.1)`,
+    hoverBg: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.25)`,
+    hoverBorder: `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.5)`
+  }
+});
+
+// 辅助函数：将十六进制颜色转换为 RGB
+function hexToRgb(hex: string) {
+  // 移除 # 号
+  hex = hex.replace('#', '');
+  
+  // 解析 RGB 值
+  const bigint = parseInt(hex, 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  
+  return { r, g, b };
+}
 </script>
 
 <style scoped>
@@ -531,12 +564,12 @@ const isHTML = (str: string): boolean => {
   overflow: hidden;
   position: relative;
   cursor: v-bind('props.clickable ? "pointer" : "default"');
-  background-color: rgba(0, 25, 50, 0.7); /* 深色背景 */
+  background-color: v-bind('themeStyle.background');
   border-radius: 8px;
   padding: 5px 12px;
   box-sizing: border-box;
-  border: 1px solid rgba(0, 102, 255, 0.3); /* 科技蓝边框 */
-  box-shadow: 0 0 20px rgba(0, 102, 255, 0.1); /* 发光效果 */
+  border: 1px solid v-bind('themeStyle.border');
+  box-shadow: 0 0 20px v-bind('themeStyle.glow');
 }
 
 .rolling-content {
@@ -578,13 +611,13 @@ const isHTML = (str: string): boolean => {
   display: flex;
   align-items: center;
   border: 1px solid transparent;
-  background-color: rgba(0, 25, 50, 0.6);
+  background-color: v-bind('themeStyle.background');
 }
 
 .rolling-item:hover {
-  background-color: rgba(24, 63, 255, 0.15);
-  border-color: rgba(0, 102, 255, 0.5);
-  box-shadow: 0 0 10px rgba(0, 102, 255, 0.2);
+  background-color: v-bind('themeStyle.hoverBg');
+  border-color: v-bind('themeStyle.hoverBorder');
+  box-shadow: 0 0 10px v-bind('themeStyle.shadow');
 }
 
 .item-content {
@@ -603,19 +636,19 @@ const isHTML = (str: string): boolean => {
   border-radius: 4px;
   cursor: zoom-in;
   transition: transform 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 102, 255, 0.2);
-  border: 1px solid rgba(0, 102, 255, 0.3);
+  box-shadow: 0 2px 4px v-bind('themeStyle.shadow');
+  border: 1px solid v-bind('themeStyle.border');
 }
 
 .item-image:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 102, 255, 0.3);
+  box-shadow: 0 4px 8px v-bind('themeStyle.shadow');
 }
 
 .item-text {
   flex: 1;
   font-size: 14px;
-  color: #90BEFF; /* 科技蓝文字 */
+  color: v-bind('themeStyle.text');
   line-height: 1.5;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -630,12 +663,12 @@ const isHTML = (str: string): boolean => {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   word-break: break-all;
-  color: #90BEFF;
+  color: v-bind('themeStyle.text');
 }
 
 .rolling-item:hover .item-text,
 .rolling-item:hover .item-html {
-  color: #00E0FF; /* 悬浮时文字变亮 */
+  color: v-bind('themeStyle.hoverText');
 }
 
 /* 水平滚动时的特殊处理 */
@@ -692,12 +725,12 @@ const isHTML = (str: string): boolean => {
 
 .rolling-display ::-webkit-scrollbar-thumb {
   border-radius: 3px;
-  background: #0066FF;
-  box-shadow: 0 0 6px rgba(0, 102, 255, 0.5);
+  background: v-bind('themeStyle.primary');
+  box-shadow: 0 0 6px v-bind('themeStyle.shadow');
 }
 
 .rolling-display ::-webkit-scrollbar-track {
   border-radius: 3px;
-  background: rgba(0, 102, 255, 0.1);
+  background: v-bind('themeStyle.glow');
 }
 </style>
