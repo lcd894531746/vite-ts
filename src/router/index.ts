@@ -7,6 +7,10 @@ import Echarts from '../views/Echarts.vue'
 import Rolling from '../views/Rolling.vue'
 import Tiandi from '../views/Tiandi.vue'
 import Xgplayer from '../views/Xgplayer.vue'
+import car from '../views/car.vue'
+import NumberChange from '../views/NumberChange.vue'
+
+
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
@@ -61,7 +65,23 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: 'xgplayer页面'
         }
-      } 
+      },
+      {
+        path: '/car',
+        name: 'car',
+        component: car,
+        meta: {
+          title: '卡片页面'
+        }
+      }, {
+        path: '/NumberChange',
+        name: 'NumberChange',
+        component: NumberChange,
+        meta: {
+          title: '数字翻牌器'
+        }
+      }
+
     ]
   }
 ]

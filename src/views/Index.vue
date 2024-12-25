@@ -4,8 +4,8 @@
     <div class="sidebar">
       <div class="logo-container">
         <h2 class="cyber-logo">
-          <span class="logo-text">Tech</span>
-          <span class="logo-highlight">System</span>
+          <span class="logo-text">Author</span>
+          <span class="logo-highlight">lv</span>
         </h2>
       </div>
       <ul class="nav-list">
