@@ -1,6 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="rolling-demo">
+    
     <section class="demo-item">
       <h3>默认蓝色主题</h3>
       <RollingDisplay
