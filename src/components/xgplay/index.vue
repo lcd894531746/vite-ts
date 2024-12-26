@@ -4,7 +4,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, onUnmounted } from "vue";
 import { Events } from "xgplayer";
 import Player, { Plugin } from "xgplayer";
 import HlsPlugin from "xgplayer-hls";
@@ -114,6 +114,10 @@ const initXgplay = () => {
 
 onMounted(() => {
   initXgplay();
+});
+// 页面卸载
+onUnmounted(() => {
+  player.value.destroy();
 });
 </script>
 
