@@ -9,6 +9,7 @@ import Tiandi from '../views/Tiandi.vue'
 import Xgplayer from '../views/Xgplayer.vue'
 import car from '../views/car.vue'
 import NumberChange from '../views/NumberChange.vue'
+import FlipClock from '../views/FlipClock.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -80,8 +81,15 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '数字翻牌器'
         }
+      },
+      {
+        path: '/FlipClock',
+        name: 'FlipClock',
+        component: FlipClock,
+        meta: {
+          title: '日期翻牌器'
+        }
       }
-
     ]
   }
 ]
