@@ -67,7 +67,7 @@ const initXgplay = () => {
     });
     // 播放进度
     player.value.on(Events.TIME_UPDATE, (time: number) => {
-      console.log("播放进度", time);
+      // console.log("播放进度", time);
     });
     // 音量发生变化
     player.value.on(Events.VOLUME_CHANGE, () => {
