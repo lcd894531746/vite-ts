@@ -86,7 +86,7 @@ const initXgplay = () => {
     });
     // 播放进度
     player.value.on(Events.TIME_UPDATE, (time: number) => {
-      // console.log("播放进度", time);
+      console.log("播放进度", time);
     });
     // 音量发生变化
     player.value.on(Events.VOLUME_CHANGE, () => {
@@ -148,7 +148,28 @@ onMounted(() => {
 });
 // 页面卸载
 onUnmounted(() => {
-  player.value.destroy();
+  console.log("页面卸载");
+  if (player.value) {
+    // 先暂停播放
+    player.value.pause();
+    // 移除所有事件监听
+    player.value.off(Events.LOAD_START);
+    player.value.off(Events.URL_CHANGE);
+    player.value.off(Events.ENDED);
+    player.value.off(Events.PLAY);
+    player.value.off(Events.TIME_UPDATE);
+    player.value.off(Events.VOLUME_CHANGE);
+    player.value.off(Events.PAUSE);
+    player.value.off(Events.ERROR);
+    player.value.off(Events.ROTATE);
+    player.value.off(Events.PIP_CHANGE);
+    player.value.off(Events.RATE_CHANGE);
+    player.value.off(Events.MINI_STATE_CHANGE);
+    // 销毁播放器实例
+    player.value.destroy();
+    // 清空引用
+    player.value = null;
+  }
 });
 
 defineExpose({
