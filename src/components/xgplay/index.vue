@@ -22,7 +22,7 @@ watch(() => props.url, (newUrl: string) => {
   
   // 确保视频加载完成后播放
   player.value.once(Events.LOADED_DATA, () => {
-    player.value.play().catch(err => {
+    player.value.play().catch((err: any) => {
       console.error('自动播放失败:', err);
     });
   });
