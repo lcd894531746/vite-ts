@@ -15,9 +15,9 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/echarts/, ''),
         secure: false,
         ws: true,
-        bypass(req, res, options) {
-          console.log(req, res, options)
-        },
+        // bypass(req, res, options) {
+        //   console.log(req, res, options)
+        // },
       }
     }
   },
