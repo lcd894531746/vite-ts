@@ -4,10 +4,29 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, onUnmounted } from "vue";
+import { onMounted, ref, onUnmounted, watch, defineProps, defineExpose } from "vue";
 import { Events } from "xgplayer";
 import Player, { Plugin } from "xgplayer";
 import HlsPlugin from "xgplayer-hls";
+
+const props = defineProps<{
+  url: string;
+}>();
+
+// 监听url变化
+watch(() => props.url, (newUrl: string) => {
+  if (!player.value) return;
+  
+  // 更新播放地址
+  player.value.src = newUrl;  // 使用 src 而不是 url
+  
+  // 确保视频加载完成后播放
+  player.value.once(Events.LOADED_DATA, () => {
+    player.value.play().catch(err => {
+      console.error('自动播放失败:', err);
+    });
+  });
+}, { immediate: false });
 
 const player = ref<any>(null);
 const initXgplay = () => {
@@ -15,7 +34,7 @@ const initXgplay = () => {
     player.value = new Player({
       el: document.getElementById("xgplay-container") as HTMLElement,
       plugins: [HlsPlugin],
-      url: "https://gcalic.v.myalicdn.com/gc/ljgcdyhxgjt_1/index.m3u8?contentid=2820180516001",
+      url: props.url,
       hls: {
         retryCount: 3, // 重试 3 次，默认值
         retryDelay: 1000, // 每次重试间隔 1 秒，默认值
@@ -45,7 +64,7 @@ const initXgplay = () => {
       videoFillMode: "contain",
       // fillHeight 填充高度，宽度溢出则裁剪宽度
       // fill 拉伸填充
-      // contain 保持宽高比，缩放至一边填满容器，另一边将添加“黑边”
+      // contain 保持宽高比，缩放至一边填满容器，另一边将添加"黑边"
       // auto 默认值，同浏览器默认
     });
 
@@ -112,12 +131,29 @@ const initXgplay = () => {
   }
 };
 
+const play = () => {
+  if (!player.value) return;
+  player.value.play().catch((err: any) => {
+    console.error('播放失败:', err);
+  });
+};
+
+const pause = () => {
+  if (!player.value) return;
+  player.value.pause();
+};
+
 onMounted(() => {
   initXgplay();
 });
 // 页面卸载
 onUnmounted(() => {
   player.value.destroy();
+});
+
+defineExpose({
+  play,
+  pause
 });
 </script>
 

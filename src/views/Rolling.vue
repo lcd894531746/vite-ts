@@ -91,9 +91,9 @@ interface RollingItem {
 
 // 基础通知
 const notices: RollingItem[] = [
-  { text: "消息1", image: "/warning.png" },
-  { text: "消息2", image: "/info.png" },
-  { text: "消息3", image: "/success.png" },
+  { text: "消息1", image: "https://cdn.seovx.com/ha/?mom=302" },
+  { text: "消息2", image: "https://cdn.seovx.com/ha/?mom=302" },
+  { text: "消息3", image: "https://cdn.seovx.com/ha/?mom=302" },
 ];
 
 // 垂直滚动通知
@@ -106,9 +106,9 @@ const verticalNotices: RollingItem[] = [
 
 // 自定义样式通知
 const customNotices: RollingItem[] = [
-  { text: "🎉 新功能上线通知", image: "/new.png" },
-  { text: "⭐ 系统更新提醒", image: "/update.png" },
-  { text: "📢 重要公告", image: "/notice.png" },
+  { text: "🎉 新功能上线通知", image: "https://cdn.seovx.com/ha/?mom=302" },
+  { text: "⭐ 系统更新提醒", image: "https://cdn.seovx.com/ha/?mom=302" },
+  { text: "📢 重要公告", image: "https://cdn.seovx.com/ha/?mom=302" },
 ];
 
 // 新闻通知
@@ -121,10 +121,10 @@ const newsNotices: RollingItem[] = [
 
 // 图文混合通知
 const mixedNotices: RollingItem[] = [
-  { text: "系统维护通知", image: "/maintenance.png" },
-  { text: "安全更新提醒", image: "/security.png" },
-  { text: "新版本发布", image: "/version.png" },
-  { text: "用户反馈", image: "/feedback.png" },
+  { text: "系统维护通知", image: "https://cdn.seovx.com/ha/?mom=302" },
+  { text: "安全更新提醒", image: "https://cdn.seovx.com/ha/?mom=302" },
+  { text: "新版本发布", image: "https://cdn.seovx.com/ha/?mom=302" },
+  { text: "用户反馈", image: "https://cdn.seovx.com/ha/?mom=302" },
 ];
 </script>
 

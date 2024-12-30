@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, onMounted, onUnmounted, watch } from "vue";
+import { ref, nextTick, onMounted, onUnmounted, watch, defineEmits, defineProps, withDefaults, defineExpose } from "vue";
 import { ElTable } from "element-plus";
 
 interface ScrollInfo {
