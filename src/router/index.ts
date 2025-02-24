@@ -10,6 +10,7 @@ import Xgplayer from '../views/Xgplayer.vue'
 import car from '../views/car.vue'
 import NumberChange from '../views/NumberChange.vue'
 import FlipClock from '../views/FlipClock.vue'
+import compressImg from '../views/compressImg.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -88,6 +89,14 @@ const routes: Array<RouteRecordRaw> = [
         component: FlipClock,
         meta: {
           title: '日期翻牌器'
+        }
+      },
+      {
+        path: '/compressImg',
+        name: 'compressImg',
+        component: compressImg,
+        meta: {
+          title: '图片压缩'
         }
       }
     ]
