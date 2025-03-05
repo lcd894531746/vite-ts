@@ -11,6 +11,7 @@ import car from '../views/car.vue'
 import NumberChange from '../views/NumberChange.vue'
 import FlipClock from '../views/FlipClock.vue'
 import compressImg from '../views/compressImg.vue'
+import threeVideo from '../views/threeVideo.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -18,8 +19,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'layout',
     component: Index,
-    redirect: '/home',
+    redirect: '/threeVideo',
     children: [
+      {
+        path: '/threeVideo',
+        name: 'threeVideo',
+        component: threeVideo,
+        meta: {
+          title: 'three.js视频'
+        }
+      },
       {
         path: '/home',
         name: 'home',
@@ -98,7 +107,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '图片压缩'
         }
-      }
+      },
+      
     ]
   }
 ]

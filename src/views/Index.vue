@@ -1,7 +1,7 @@
 <template>
   <div class="layout">
     <!-- 侧边栏 -->
-    <div class="sidebar">
+    <div class="sidebar" v-if="false">
       <div class="logo-container">
         <h2 class="cyber-logo">
           <span class="logo-text">Author</span>
@@ -76,7 +76,7 @@ const handleNavClick = (path: string) => {
 }
 
 .sidebar {
-  width: 280px;
+  width: 80px;
   background: linear-gradient(180deg, #1a1f2c 0%, #121620 100%);
   padding: 20px;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
