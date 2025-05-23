@@ -11,7 +11,10 @@ import car from '../views/car.vue'
 import NumberChange from '../views/NumberChange.vue'
 import FlipClock from '../views/FlipClock.vue'
 import compressImg from '../views/compressImg.vue'
-import threeVideo from '../views/threeVideo.vue'
+// import threeVideo from '../views/threeVideo.vue'
+import uploadCos from '../views/uploadCos.vue'
+import CascaderDemo from '../views/CascaderDemo.vue'
+import PeachWorlds from '../views/PeachWorlds.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -19,16 +22,16 @@ const routes: Array<RouteRecordRaw> = [
     path: '/',
     name: 'layout',
     component: Index,
-    redirect: '/threeVideo',
+    redirect: '/home',
     children: [
-      {
-        path: '/threeVideo',
-        name: 'threeVideo',
-        component: threeVideo,
-        meta: {
-          title: 'three.js视频'
-        }
-      },
+      // {
+      //   path: '/threeVideo',
+      //   name: 'threeVideo',
+      //   component: threeVideo,
+      //   meta: {
+      //     title: 'three.js视频'
+      //   }
+      // },
       {
         path: '/home',
         name: 'home',
@@ -108,7 +111,30 @@ const routes: Array<RouteRecordRaw> = [
           title: '图片压缩'
         }
       },
-      
+      {
+        path: '/uploadCos',
+        name: 'uploadCos',
+        component: uploadCos,
+        meta: {
+          title: '上传COS'
+        }
+      },
+      {
+        path: '/cascader',
+        name: 'cascader',
+        component: CascaderDemo,
+        meta: {
+          title: '省市区级联选择器'
+        }
+      },
+      {
+        path: '/peach-worlds',
+        name: 'peachWorlds',
+        component: PeachWorlds,
+        meta: {
+          title: 'Peach Worlds'
+        }
+      }
     ]
   }
 ]
