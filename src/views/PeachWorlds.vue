@@ -2,6 +2,7 @@
   <div class="peach-worlds">
     <div ref="container" class="model-container"></div>
     <div v-if="error" class="error-message">{{ error }}</div>
+    <canvas id="video" class="video-canvas"></canvas>
   </div>
 </template>
 
@@ -16,7 +17,8 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader'
 import bgImg from '@/assets/bg.webp'
 import metallic from '@/assets/metallic.webp'
 import gradient from '@/assets/test.jpg'
-
+import JSMpeg from 'jsmpeg-player'
+import axios from 'axios'
 
 const container = ref<HTMLElement | null>(null)
 const error = ref<string>('')
@@ -28,13 +30,13 @@ let mixer: THREE.AnimationMixer | null = null
 let clock: THREE.Clock
 let ring: THREE.Object3D | null = null
 let ring2: THREE.Object3D | null = null
+let videoDom: any = null
+let wsport = 0
 
 let ringRotationTarget = 1.6
 let ringRotationCurrent = 1.6
 let ring2RotationTarget = 0
 let ring2RotationCurrent = 0
-
-
 
 // 检查 WebGL 支持
 const checkWebGLSupport = () => {
@@ -285,12 +287,29 @@ onMounted(() => {
   animate()
   window.addEventListener('resize', handleResize)
   window.addEventListener('wheel', onWheel)
+
+  // 初始化视频流
+  axios.get(`/rtmpToWebsocket`).then((res) => {
+    const wsUrl = res.data.wsUrl || `ws://localhost:${res.data.port}/traffic`
+    videoDom = new JSMpeg.Player(wsUrl, {
+      bufferSize: 8,
+      videoBufferSize: 20484096,
+      canvas: document.getElementById('video')
+    })
+  })
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
   window.removeEventListener('wheel', onWheel)
   renderer?.dispose()
+  
+  // 清理视频流
+  if (videoDom) {
+    videoDom.stop()
+    videoDom.destroy()
+    console.log('视频连接已关闭')
+  }
 })
 </script>
 
@@ -318,5 +337,16 @@ onBeforeUnmount(() => {
   border-radius: 8px;
   text-align: center;
   z-index: 1000;
+}
+
+.video-canvas {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 320px;
+  height: 240px;
+  background-color: #000;
+  border-radius: 8px;
+  z-index: 100;
 }
 </style>

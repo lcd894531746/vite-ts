@@ -15,6 +15,7 @@ import compressImg from '../views/compressImg.vue'
 import uploadCos from '../views/uploadCos.vue'
 import CascaderDemo from '../views/CascaderDemo.vue'
 import PeachWorlds from '../views/PeachWorlds.vue'
+import WebSocketVideo from '../views/WebSocketVideo.vue'
 
 
 const routes: Array<RouteRecordRaw> = [
@@ -24,6 +25,14 @@ const routes: Array<RouteRecordRaw> = [
     component: Index,
     redirect: '/home',
     children: [
+      {
+        path: '/websocket-video',
+        name: 'websocketVideo',
+        component: WebSocketVideo,
+        meta: {
+          title: 'WebSocket 视频流'
+        }
+      },
       // {
       //   path: '/threeVideo',
       //   name: 'threeVideo',
@@ -134,7 +143,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: 'Peach Worlds'
         }
-      }
+      },
+     
     ]
   }
 ]

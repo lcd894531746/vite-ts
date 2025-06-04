@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebSocket 视频流播放</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsmpeg-player@3.0.3/build/jsmpeg-player.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      .video-container {
+        width: 100%;
+        margin: 20px 0;
+      }
+      canvas {
+        width: 100%;
+        height: auto;
+        background-color: #000;
+        border-radius: 4px;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      .connect {
+        background-color: #4caf50;
+        color: white;
+      }
+      .disconnect {
+        background-color: #f44336;
+        color: white;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+      .status {
+        text-align: center;
+        margin-top: 10px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>WebSocket 视频流播放</h1>
+      <div class="video-container">
+        <canvas id="video"></canvas>
+      </div>
+      <div class="controls">
+        <button class="connect" onclick="connectWebSocket()">连接</button>
+        <button class="disconnect" onclick="disconnectWebSocket()">断开</button>
+      </div>
+      <div class="status" id="status">未连接</div>
+    </div>
+
+    <script>
+      let player = null;
+      const statusElement = document.getElementById("status");
+
+      async function connectWebSocket() {
+        try {
+          // 获取 WebSocket 地址
+          const response = await fetch("http://127.0.0.1:9001/rtmpToWebsocket");
+          const data = await response.json();
+          const wsUrl = data.wsUrl || `ws://localhost:${data.port}/traffic`;
+
+          // 如果已经有播放器实例，先销毁
+          if (player) {
+            player.destroy();
+          }
+
+          // 创建新的播放器实例
+          player = new JSMpeg.Player(wsUrl, {
+            canvas: document.getElementById("video"),
+            bufferSize: 8,
+            videoBufferSize: 20484096,
+            onSourceEstablished: () => {
+              statusElement.textContent = "已连接";
+              statusElement.style.color = "#4CAF50";
+            },
+            onSourceCompleted: () => {
+              statusElement.textContent = "连接已断开";
+              statusElement.style.color = "#f44336";
+            },
+            onError: (error) => {
+              console.error("播放器错误:", error);
+              statusElement.textContent = "连接错误";
+              statusElement.style.color = "#f44336";
+            },
+          });
+        } catch (error) {
+          console.error("连接错误:", error);
+          statusElement.textContent = "连接失败";
+          statusElement.style.color = "#f44336";
+        }
+      }
+
+      function disconnectWebSocket() {
+        if (player) {
+          player.destroy();
+          player = null;
+          statusElement.textContent = "已断开连接";
+          statusElement.style.color = "#666";
+          fetch("http://127.0.0.1:9001/cleraWsAll");
+        }
+      }
+
+      // 页面关闭时清理资源
+      window.addEventListener("beforeunload", () => {
+        if (player) {
+          player.destroy();
+        }
+      });
+    </script>
+  </body>
+</html>
