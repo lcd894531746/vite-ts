@@ -1,12 +1,16 @@
 <template>
   <div class="layout">
     <!-- 侧边栏 -->
-    <div class="sidebar">
+    <div class="sidebar" :class="{ collapsed: isCollapsed }">
       <div class="logo-container">
         <h2 class="cyber-logo">
           <span class="logo-text">Author</span>
           <span class="logo-highlight">lv</span>
         </h2>
+        <button class="collapse-btn" @click="toggleSidebar" :title="isCollapsed ? '展开' : '收起'">
+          <span v-if="isCollapsed">▶</span>
+          <span v-else>◀</span>
+        </button>
       </div>
       <ul class="nav-list">
         <li v-for="route in menuRoutes" :key="route.path">
@@ -51,6 +55,7 @@ import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 const currentPath = ref(route.path);
+const isCollapsed = ref(false);
 
 const menuRoutes = computed(() => {
   const rootRoute = router.getRoutes().find((route) => route.path === "/");
@@ -64,6 +69,10 @@ const menuRoutes = computed(() => {
 const handleNavClick = (path: string) => {
   currentPath.value = path;
   router.push(path);
+};
+
+const toggleSidebar = () => {
+  isCollapsed.value = !isCollapsed.value;
 };
 </script>
 
@@ -85,6 +94,12 @@ const handleNavClick = (path: string) => {
   position: relative;
   overflow: hidden;
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+  transition: width 0.2s ease, padding 0.2s ease;
+}
+
+.sidebar.collapsed {
+  width: 64px;
+  padding: 20px 12px;
 }
 
 .logo-container {
@@ -101,6 +116,24 @@ const handleNavClick = (path: string) => {
   display: flex;
   justify-content: center;
   gap: 5px;
+}
+
+.sidebar.collapsed .cyber-logo .logo-text,
+.sidebar.collapsed .cyber-logo .logo-highlight {
+  display: none;
+}
+
+.collapse-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cfe9ff;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
 }
 
 .logo-text {
@@ -121,6 +154,7 @@ const handleNavClick = (path: string) => {
   padding: 0;
   margin: 0;
   flex: 1;
+  overflow-y: auto;
 }
 
 .nav-link {
@@ -141,6 +175,11 @@ const handleNavClick = (path: string) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.sidebar.collapsed .link-content {
+  justify-content: center;
+  padding: 12px 12px;
 }
 
 .link-glow {
@@ -175,6 +214,10 @@ const handleNavClick = (path: string) => {
   font-size: 0.95rem;
   transition: all 0.3s ease;
   z-index: 1;
+}
+
+.sidebar.collapsed .link-text {
+  display: none;
 }
 
 .link-icon {
@@ -295,6 +338,22 @@ const handleNavClick = (path: string) => {
 }
 
 /* 滚动条样式 */
+.nav-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.nav-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 255, 136, 0.2);
+  border-radius: 3px;
+}
+
+.nav-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 255, 136, 0.4);
+}
 .main-content::-webkit-scrollbar {
   width: 6px;
 }
