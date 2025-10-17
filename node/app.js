@@ -8,6 +8,10 @@ ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
 const app = express(); // 创建一个express实例,提供http服务
 
+const cors = require('cors');
+
+app.use(cors()); // 全局允许所有跨域
+
 // ws流使用端口列表
 let PostList = [];
 /* **************************************************api************************************************ */
